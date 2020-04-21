@@ -115,7 +115,10 @@ include "app/config/koneksi.php";
                        <td> <input class="form-control" type="text" name="<?php echo $field[$allField[$data][$i]]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
                      <?php } ?>
                       <td>
-                        <?php print_r($dataInRow); ?>
+                        <?php
+                          $fieldTable = $allField[$data];
+                          $dataTable  = $dataInRow;
+                        ?>
                         <button type="button" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
                         <a type="button" class="btn btn-danger option-item" name="button" href="?schema=<?php echo $db; ?>&action=delete&table=<?php echo $data; ?>&field=<?php echo $allField[$data][0]; ?>&id=<?php echo $field[$allField[$data][0]]; ?>"><i class="fa fa-trash"></i></a>
                       </td>
