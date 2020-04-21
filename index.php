@@ -38,6 +38,12 @@ include "app/config/koneksi.php";
     </style>
   </head>
   <body>
+    <?php
+    if (!empty($_REQUEST['action'])) {
+      if ($_REQUEST['action'] == 'delete') {
+        include "app/helper/delete.php";
+      }
+    } ?>
   <div class="row" style="width:100%">
     <div class="col-md-2 shadow-sm" style="padding-right: 0px;">
       <br>
@@ -102,10 +108,14 @@ include "app/config/koneksi.php";
                    while ($field = mysqli_fetch_array($content)) {
                    ?>
                    <tr>
-                     <?php for ($i=0; $i < count($allField[$data]) ; $i++) { ?>
+                     <?php
+                     for ($i=0; $i < count($allField[$data]) ; $i++) {
+                       $dataInRow[] = $field[$allField[$data][$i]];
+                        ?>
                        <td> <input class="form-control" type="text" name="<?php echo $field[$allField[$data][$i]]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
                      <?php } ?>
                       <td>
+                        <?php print_r($dataInRow); ?>
                         <button type="button" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
                         <a type="button" class="btn btn-danger option-item" name="button" href="?schema=<?php echo $db; ?>&action=delete&table=<?php echo $data; ?>&field=<?php echo $allField[$data][0]; ?>&id=<?php echo $field[$allField[$data][0]]; ?>"><i class="fa fa-trash"></i></a>
                       </td>
