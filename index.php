@@ -107,7 +107,7 @@ include "app/config/koneksi.php";
                      <?php } ?>
                       <td>
                         <button type="button" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger option-item" name="button" onclick="delete()"><i class="fa fa-trash"></i></button>
+                        <a type="button" class="btn btn-danger option-item" name="button" href="?schema=<?php echo $db; ?>&action=delete&table=<?php echo $data; ?>&field=<?php echo $allField[$data][0]; ?>&id=<?php echo $field[$allField[$data][0]]; ?>"><i class="fa fa-trash"></i></a>
                       </td>
                    </tr>
                    <?php } ?>
@@ -143,11 +143,6 @@ include "app/config/koneksi.php";
     </div>
   </div>
   </body>
-  <script type="text/javascript">
-    function delete() {
-      alert("delete");
-    }
-  </script>
   <script src="assets/js/jquery-3.4.1.slim.min.js"></script>
   <script src="assets/js/popper.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
