@@ -1,9 +1,12 @@
 <?php
-
 $host     = "localhost";
-$username = "axlk4822_library";
-$password = "Siapanamaanda";
-$db       = "axlk4822_library";
+$username = "root";
+$password = "";
+if (empty($_REQUEST['schema'])) {
+  $db     = "";
+} else {
+  $db     = $_REQUEST['schema'];
+}
 
 $mysqli = new mysqli($host,$username,$password,$db);
 $myArray = array();

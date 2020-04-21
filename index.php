@@ -1,3 +1,7 @@
+<?php
+error_reporting(0);
+include "app/config/koneksi.php";
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
@@ -25,26 +29,39 @@
         font-size: 15px;
         color: white;
       }
+      .btn-submit {
+      background: #f85351;
+      color:#fff;
+      float:right;
+      width:100%;
+      }
     </style>
   </head>
   <body>
   <div class="row" style="width:100%">
     <div class="col-md-2 shadow-sm" style="padding-right: 0px;">
       <br>
-      <center><img src="assets/img/logo.png" alt="" style="width:150px"></center>
+      <center><a href="index.php"><img src="assets/img/logo.png" alt="" style="width:150px"></a></center>
       <br>
         <div class="list-group" id="list-tab" role="tablist">
-          <h2 class="side-title">Library Database</h2>
-          <?php
-          $id = $_REQUEST['id'];
-          include "app/config/koneksi.php";
-          $result = mysqli_query($mysqli, "SHOW TABLES FROM `axlk4822_library`");
-
-          while ($row = mysqli_fetch_row($result)) {
-            $data[] = $row[0];
-            ?>
-            <a class="side-item list-group-item list-group-item-action" id="<?php echo $row[0]; ?>-list" data-toggle="list" href="#<?php echo $row[0]; ?>" role="tab" aria-controls="about"><?php echo $row[0]; ?></a>
+          <?php if (!empty($db)) { ?>
+            <h2 class="side-title" style="text-transform:capitalize"><?php echo $db; ?> Database</h2>
+          <?php } else { ?>
+            <h2 class="side-title">Select Database</h2>
           <?php } ?>
+          <?php
+          if (!empty($db)) {
+            $result = mysqli_query($mysqli, "SHOW TABLES FROM `$db`");
+            while ($row = mysqli_fetch_row($result)) {
+              $data[] = $row[0];
+              ?>
+              <a class="side-item list-group-item list-group-item-action" id="<?php echo $row[0]; ?>-list" data-toggle="list" href="#<?php echo $row[0]; ?>" role="tab" aria-controls="about"><?php echo $row[0]; ?></a>
+            <?php }} else {
+              $result = mysqli_query($mysqli,"SHOW DATABASES");
+              while ($row = mysqli_fetch_assoc($result)) {
+            ?>
+            <a class="side-item list-group-item list-group-item-action" href="?schema=<?php echo $row['Database']; ?>" role="tab" aria-controls="about"><?php echo $row['Database']; ?></a>
+            <?php  }} ?>
       </div>
     </div>
     <div class="col-md-10">
@@ -90,7 +107,7 @@
                      <?php } ?>
                       <td>
                         <button type="button" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
-                        <button type="button" class="btn btn-danger option-item" name="button"><i class="fa fa-trash"></i></button>
+                        <button type="button" class="btn btn-danger option-item" name="button" onclick="delete()"><i class="fa fa-trash"></i></button>
                       </td>
                    </tr>
                    <?php } ?>
@@ -107,10 +124,15 @@
                       <?php echo $fieldData; ?>
                     </div>
                     <div class="col-9">
-                      <input type="text" name="<?php echo $fieldDatal; ?>" class="form-control" value="">
+                      <input type="text" name="<?php echo $fieldDatal; ?>" class="form-control" style="margin-bottom:5px" value="">
                     </div>
                   </div>
                 <?php } ?>
+                <div class="row">
+                  <div class="col-12">
+                  <input type="submit" class="btn btn-submit" name="" value="Save">
+                  </div>
+                </div>
             </div>
             </form>
             </div>
@@ -121,6 +143,11 @@
     </div>
   </div>
   </body>
+  <script type="text/javascript">
+    function delete() {
+      alert("delete");
+    }
+  </script>
   <script src="assets/js/jquery-3.4.1.slim.min.js"></script>
   <script src="assets/js/popper.min.js"></script>
   <script src="assets/js/bootstrap.min.js"></script>
