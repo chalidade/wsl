@@ -114,9 +114,15 @@ include "app/config/koneksi.php";
                    <tr>
                      <?php
                      for ($i=0; $i < count($allField[$data]) ; $i++) {
+                       if ($i == 0) {
                         ?>
-                       <td> <input class="form-control" type="text" name="<?php echo $allField[$data][$i]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
-                     <?php } ?>
+                        <td>
+                          <input disabled class="form-control" type="text" value="<?php echo $field[$allField[$data][$i]]; ?>">
+                          <input class="form-control" type="hidden" name="<?php echo $allField[$data][$i]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>">
+                        </td>
+                       <?php } else { ?>
+                         <td> <input class="form-control" type="text" name="<?php echo $allField[$data][$i]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
+                       <?php }} ?>
                       <td>
                         <button type="submit" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
                         <a type="button" class="btn btn-danger option-item" name="button" href="?schema=<?php echo $db; ?>&action=delete&table=<?php echo $data; ?>&field=<?php echo $allField[$data][0]; ?>&id=<?php echo $field[$allField[$data][0]]; ?>"><i class="fa fa-trash"></i></a>
