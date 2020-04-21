@@ -99,18 +99,20 @@
             </div>
             <div class="tab-pane fade" id="<?php echo $forId."1"; ?>" role="tabpanel" aria-labelledby="<?php echo $forId."1"; ?>-tab">
               <br>
-              <div class="row">
               <form class="" action="index.php" method="post">
-              <?php foreach ($allField[$data] as $fieldData) { ?>
-                  <div class="col-3">
-                    <?php echo $fieldData; ?>
+                <div class="container">
+                <?php foreach ($allField[$data] as $fieldData) { ?>
+                  <div class="row">
+                    <div class="col-3">
+                      <?php echo $fieldData; ?>
+                    </div>
+                    <div class="col-9">
+                      <input type="text" name="<?php echo $fieldDatal; ?>" class="form-control" value="">
+                    </div>
                   </div>
-                  <div class="col-9">
-                    <input type="text" name="<?php echo $fieldDatal; ?>" class="form-control" value="">
-                  </div>
-              <?php } ?>
-            </form>
+                <?php } ?>
             </div>
+            </form>
             </div>
           </div>
           </div>
