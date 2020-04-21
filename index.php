@@ -42,6 +42,8 @@ include "app/config/koneksi.php";
     if (!empty($_REQUEST['action'])) {
       if ($_REQUEST['action'] == 'delete') {
         include "app/helper/delete.php";
+      } else if ($_REQUEST['action'] == 'edit') {
+        include "app/helper/update.php";
       }
     } ?>
   <div class="row" style="width:100%">
@@ -104,25 +106,23 @@ include "app/config/koneksi.php";
                   </tr>
                   <?php
                   $no = 1;
-                   $content = mysqli_query($mysqli, "SELECT * FROM $data");
+                   $content      = mysqli_query($mysqli, "SELECT * FROM $data");
                    while ($field = mysqli_fetch_array($content)) {
+                   $fieldTable   = base64_encode(json_encode($allField[$data]));
                    ?>
+                   <form action="app/helper/update.php?schema=<?php echo $db; ?>&action=update&table=<?php echo $data; ?>&field=<?php echo $fieldTable; ?>" method="post">
                    <tr>
                      <?php
                      for ($i=0; $i < count($allField[$data]) ; $i++) {
-                       $dataInRow[] = $field[$allField[$data][$i]];
                         ?>
-                       <td> <input class="form-control" type="text" name="<?php echo $field[$allField[$data][$i]]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
+                       <td> <input class="form-control" type="text" name="<?php echo $allField[$data][$i]; ?>" value="<?php echo $field[$allField[$data][$i]]; ?>"></td>
                      <?php } ?>
                       <td>
-                        <?php
-                          $fieldTable = $allField[$data];
-                          $dataTable  = $dataInRow;
-                        ?>
-                        <button type="button" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
+                        <button type="submit" class="btn btn-warning option-item" name="button"><i class="fa fa-edit"></i></button>
                         <a type="button" class="btn btn-danger option-item" name="button" href="?schema=<?php echo $db; ?>&action=delete&table=<?php echo $data; ?>&field=<?php echo $allField[$data][0]; ?>&id=<?php echo $field[$allField[$data][0]]; ?>"><i class="fa fa-trash"></i></a>
                       </td>
                    </tr>
+                 </form>
                    <?php } ?>
                 </table>
               </div>
