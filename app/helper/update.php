@@ -4,17 +4,29 @@ $schema     = $_REQUEST['schema'];
 $table      = $_REQUEST['table'];
 $editField  = "";
 $editValue  = "";
-$field      = json_decode(base64_decode($_REQUEST['field']));
+$fieldAll   = json_decode(base64_decode($_REQUEST['field']));
+$fieldId    = $fieldAll[0];
 
-foreach ($field as $field) {
+foreach ($fieldAll as $field) {
   $editField .= $field.", ";
   $data[$field] = $_POST[$field];
 }
 
-foreach ($data as $data) {
-  $editValue .= '"'.$data.'", ';
+foreach ($data as $value) {
+  $editValue .= '"'.$value.'", ';
 };
 
-$field = "(".substr($editField, 0,-2).")";
-echo "(".substr($editValue, 0,-2).")";
- ?>
+$fieldData = "(".substr($editField, 0,-2).")";
+$valueData =  "(".substr($editValue, 0,-2).")";
+$id   = $data[$fieldId];
+
+$delete = mysqli_query($mysqli, "DELETE FROM `$table` WHERE `$table`.`$fieldId` = '$id'");
+$insert = mysqli_query($mysqli, "INSERT INTO $table $fieldData VALUE $valueData");
+?>
+
+<script type="text/javascript">
+window.setTimeout(function(){
+  var url = "index.php?schema=<?php echo $schema; ?>";
+   alert("Edit Success");window.location.href = url;
+}, 1000);
+</script>

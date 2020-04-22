@@ -42,14 +42,14 @@ include "app/config/koneksi.php";
     if (!empty($_REQUEST['action'])) {
       if ($_REQUEST['action'] == 'delete') {
         include "app/helper/delete.php";
-      } else if ($_REQUEST['action'] == 'edit') {
+      } else if ($_REQUEST['action'] == 'update') {
         include "app/helper/update.php";
       }
     } ?>
   <div class="row" style="width:100%">
     <div class="col-md-2 shadow-sm" style="padding-right: 0px;">
       <br>
-      <center><a href="index.php"><img src="assets/img/logo.png" alt="" style="width:150px"></a></center>
+      <center><a href="index.php?action=logout"><img src="assets/img/logo.png" alt="" style="width:150px"></a></center>
       <br>
         <div class="list-group" id="list-tab" role="tablist">
           <?php if (!empty($db)) { ?>
@@ -110,7 +110,7 @@ include "app/config/koneksi.php";
                    while ($field = mysqli_fetch_array($content)) {
                    $fieldTable   = base64_encode(json_encode($allField[$data]));
                    ?>
-                   <form action="app/helper/update.php?schema=<?php echo $db; ?>&action=update&table=<?php echo $data; ?>&field=<?php echo $fieldTable; ?>" method="post">
+                   <form action="?schema=<?php echo $db; ?>&action=update&table=<?php echo $data; ?>&field=<?php echo $fieldTable; ?>" method="post">
                    <tr>
                      <?php
                      for ($i=0; $i < count($allField[$data]) ; $i++) {
